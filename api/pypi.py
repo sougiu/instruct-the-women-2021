@@ -16,7 +16,6 @@ def version_exists(package_name, version):
     else:
         return False
 
-
 def latest_version(package_name):
     # TODO
     # Fazer requisição na API do PyPI para descobrir a última versão
