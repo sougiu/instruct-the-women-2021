@@ -5,7 +5,6 @@ from .pypi import version_exists, latest_version
 import json
 from rest_framework.renderers import JSONRenderer
 
-
 class PackageSerializer(serializers.ModelSerializer):
     class Meta:
         model = PackageRelease
