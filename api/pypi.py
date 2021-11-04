@@ -10,20 +10,29 @@ import json
 
 # Checar se o pacote existe, considerando ou não a versão
 def version_exists(package_name, version):
-    dados_pacote = requests.get(f"https://pypi.org/pypi/{package_name}/{version}/json")
-    if dados_pacote:
-        return True
-    else:
+    url_base = 'https://pypi.org/pypi'
+    url = f"{url_base}/{package_name}/{version}/json"
+    
+    json_raw = requests.get(url)
+    
+    if json_raw.status_code == 404:
         return False
+    return True
 
 def latest_version(package_name):
     # TODO
     # Fazer requisição na API do PyPI para descobrir a última versão
     # de um pacote. Retornar None se o pacote não existir.
-
-    dados_pacote = requests.get(f"https://pypi.odados_pacoteg/pypi/{package_name}/json")
-    if dados_pacote.status_code == 404:
-        return "None"
-    else:
-        dados_pacote = dados_pacote.json()
-        return list(dados_pacote['releases'].keys())[-1]
+    
+    url_base = 'https://pypi.org/pypi'
+    url = f"{url_base}/{package_name}/json"
+    
+    json_raw = requests.get(url)
+    
+    if json_raw.status_code == 404:
+        return None
+    
+    json = json_raw.json()
+    ultima_versao = json['info']['version']
+    
+    return ultima_versao
